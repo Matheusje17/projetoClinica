@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 
 import com.project.clinica.domain.dtos.ImageDTO;
 
@@ -30,10 +29,6 @@ public class AuthImage implements Serializable{
 	protected String fileType;
 	
 	protected Boolean isSorteada;
-	
-	@OneToOne(mappedBy = "sortedImage")
-	protected AuthProfileClass authProfileClass;
-	
 	
 	public AuthImage() {}
 	

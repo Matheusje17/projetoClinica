@@ -1,6 +1,5 @@
 package com.project.clinica.domain.dtos;
 
-import com.project.clinica.domain.AuthImage;
 import com.project.clinica.domain.AuthProfileClass;
 
 public class AuthProfileClassDTO {	
@@ -9,7 +8,7 @@ public class AuthProfileClassDTO {
 	
 	public String profileDeveloperName;
 	
-	public AuthImage sortedImage;
+	public String sortedImage;
 
 	public AuthProfileClassDTO() {}
 	
@@ -21,7 +20,7 @@ public class AuthProfileClassDTO {
 	public AuthProfileClassDTO(AuthProfileClass authProfile) {
 		this.id = authProfile.getId();
 		this.profileDeveloperName = authProfile.getProfileDeveloperName();
-		this.sortedImage = authProfile.getSortedImage();
+		this.sortedImage = authProfile.getSortedImageCod();
 	}
 
 	public Integer getId() {
@@ -40,11 +39,11 @@ public class AuthProfileClassDTO {
 		this.profileDeveloperName = profileDeveloperName;
 	}
 
-	public AuthImage getSortedImage() {
+	public String getSortedImage() {
 		return sortedImage;
 	}
 
-	public void setSortedImage(AuthImage sortedImage) {
+	public void setSortedImage(String sortedImage) {
 		this.sortedImage = sortedImage;
 	}
 	

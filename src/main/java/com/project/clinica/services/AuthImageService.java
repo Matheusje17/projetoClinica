@@ -10,13 +10,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.clinica.business.ValidaLoginClinica;
 import com.project.clinica.domain.AuthImage;
 import com.project.clinica.domain.dtos.ImageDTO;
+import com.project.clinica.repositories.AuthProfileRepository;
 import com.project.clinica.repositories.ImagemRepository;
+import com.project.clinica.resources.AuthImageResource;
 
 @Service
 public class AuthImageService {
 	
 	@Autowired
 	ImagemRepository imgRepository;
+	
+	@Autowired
+	AuthProfileRepository authProfileRepository;
 	
 	public AuthImage save(MultipartFile file) {
 		System.out.println("ERROOOOOOOOOOOOO " +file);
@@ -48,13 +53,14 @@ public class AuthImageService {
 		return imgRepository.saveAll(imgsToInativate);
 	}
 	
-	public void autorizarLogin(Integer cogigo) {
-		AuthImage imgEscolhidaUser = imgRepository.findById(cogigo).orElse(null);
-		AuthImage imgSorteada = imgRepository.findSortedas(true);
+	public Boolean autorizarLogin(AuthImageResource.CustomRequest obj) {
+		AuthImage imgEscolhidaUser = imgRepository.findById(obj.getCodigoImg()).orElse(null);
+		String imgCod = authProfileRepository.findByProfileDeveloperName(obj.getProfileDeveloperName()).orElse(null).getSortedImageCod();
+		AuthImage imgSorteada = imgRepository.findById(Integer.valueOf(imgCod)).orElse(null);
 		
 		ValidaLoginClinica validaLoginClinica = new ValidaLoginClinica();
 		
-		validaLoginClinica.doValidacao(imgEscolhidaUser, imgSorteada);
+		return validaLoginClinica.doValidacao(imgEscolhidaUser, imgSorteada);
 	}
 	
 	public List<AuthImage> getAllAuthImages() {

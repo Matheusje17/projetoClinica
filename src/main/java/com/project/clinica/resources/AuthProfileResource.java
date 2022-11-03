@@ -60,7 +60,7 @@ public class AuthProfileResource {
 	}
 	
 	public class CustomResponse{
-		private Integer codigoImg;
+		private String codigoImg;
 		private String profileDeveloperName;
 		
 		public CustomResponse() {
@@ -69,15 +69,15 @@ public class AuthProfileResource {
 
 		public CustomResponse(AuthProfileClass obj) {
 			super();
-			this.codigoImg = obj.getSortedImage().getCodigo();
+			this.codigoImg = obj.getSortedImageCod();
 			this.profileDeveloperName = obj.getProfileDeveloperName();
 		}
 
-		public Integer getCodigoImg() {
+		public String getCodigoImg() {
 			return codigoImg;
 		}
 
-		public void setCodigoImg(Integer codigoImg) {
+		public void setCodigoImg(String codigoImg) {
 			this.codigoImg = codigoImg;
 		}
 
@@ -88,8 +88,6 @@ public class AuthProfileResource {
 		public void setProfileDeveloperName(String profileDeveloperName) {
 			this.profileDeveloperName = profileDeveloperName;
 		}
-		
-		
 		
 	}
 

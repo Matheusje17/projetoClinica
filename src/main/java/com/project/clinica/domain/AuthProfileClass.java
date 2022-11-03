@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 import com.project.clinica.domain.dtos.AuthProfileClassDTO;
 
@@ -21,9 +19,7 @@ public class AuthProfileClass implements Serializable {
 	
 	protected String profileDeveloperName;
 	
-	@OneToOne
-	@JoinColumn(name = "codigo")
-	AuthImage sortedImage;
+	protected String sortedImage;
 
 
 	public AuthProfileClass() {}
@@ -52,11 +48,11 @@ public class AuthProfileClass implements Serializable {
 		this.profileDeveloperName = profileDeveloperName;
 	}
 
-	public AuthImage getSortedImage() {
+	public String getSortedImageCod() {
 		return sortedImage;
 	}
 
-	public void setSortedImage(AuthImage sortedImage) {
+	public void setSortedImageCod(String sortedImage) {
 		this.sortedImage = sortedImage;
 	}
 	

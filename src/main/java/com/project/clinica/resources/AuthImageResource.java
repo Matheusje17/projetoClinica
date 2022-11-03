@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,12 +64,64 @@ public class AuthImageResource {
 
 	}
 	
-
-	@GetMapping(value = "/{codigo}")
-	public ResponseEntity<ImageDTO> autorizarLoginImagens(@PathVariable Integer codigo) {
-		authImgService.autorizarLogin(codigo);
-		return ResponseEntity.ok().body(null);
+	//TODO -> Mudar para receber como parametro o profileDeveloperName
+	@PostMapping(value = "autorizarLogin")
+	public ResponseEntity<AuthImageResource.CustomResponse> autorizarLoginImagens(@RequestBody AuthImageResource.CustomRequest obj) {
+		Boolean result = authImgService.autorizarLogin(obj);
+		CustomResponse customResponse = new CustomResponse(result);
+		return ResponseEntity.ok().body(customResponse);
 
 	}
+	
+	
+	public static class CustomRequest{
+		private Integer codigoImg;
+		private String profileDeveloperName;
+		
+		public CustomRequest() {
+			super();
+		}
 
+		public Integer getCodigoImg() {
+			return codigoImg;
+		}
+
+		public void setCodigoImg(Integer codigoImg) {
+			this.codigoImg = codigoImg;
+		}
+
+		public String getProfileDeveloperName() {
+			return profileDeveloperName;
+		}
+
+		public void setProfileDeveloperName(String profileDeveloperName) {
+			this.profileDeveloperName = profileDeveloperName;
+		}
+		
+	}
+	
+	public static class CustomResponse{
+		String isAutorizado;
+		
+		public CustomResponse(Boolean isAutorizado) {
+			if (isAutorizado) {
+				this.isAutorizado = "autorizado";
+			}
+			else {
+				this.isAutorizado = "inautorizado";
+			}
+		}
+
+		public String getIsAutorizado() {
+			return isAutorizado;
+		}
+
+		public void setIsAutorizado(String isAutorizado) {
+			this.isAutorizado = isAutorizado;
+		}
+		
+		
+		
+	}
+		
 }

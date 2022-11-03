@@ -38,7 +38,7 @@ public class AuthProfileService {
 		AuthProfileClass auth = profileRepository.findByProfileDeveloperName(profileDevoloperName).orElse(null);
 		AuthImage imgSorteada = new AuthImage(sorteio.realizaSorteio(listToSort));
 		
-		auth.setSortedImage(imgSorteada);
+		auth.setSortedImageCod(imgSorteada.getCodigo().toString());
 		return profileRepository.save(auth);
 	}
 	

@@ -17,7 +17,7 @@ public class ValidaLoginClinica {
 
 		private static final long serialVersionUID = 1L;};
 
-	public void doValidacao(AuthImage imgEscolhidaUser, AuthImage imgSorteada) {
+	public Boolean doValidacao(AuthImage imgEscolhidaUser, AuthImage imgSorteada) {
 		
 		byte[] bytesEscolhida = imgEscolhidaUser.getImagem();
 		byte[] bytesSorteada = imgSorteada.getImagem();
@@ -29,10 +29,11 @@ public class ValidaLoginClinica {
 			BufferedImage biEcolhida = ImageIO.read(inputStreamEscolhida);
 			BufferedImage biSorteada = ImageIO.read(inputStreamSorteada);
 			
-			compararImagens(biEcolhida, biSorteada);
+			return compararImagens(biEcolhida, biSorteada);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 	}
@@ -42,8 +43,9 @@ public class ValidaLoginClinica {
 	//#			PRIVATE METHODS	       #
 	//##################################	
 	
-	private void compararImagens (BufferedImage biEcolhida, BufferedImage biSorteada) {
-
+	private Boolean compararImagens (BufferedImage biEcolhida, BufferedImage biSorteada) {
+		
+		Boolean result = false;
 
 		int w1 = biEcolhida.getWidth(OBSERVER);
 		int h1 = biEcolhida.getHeight(OBSERVER);
@@ -63,11 +65,11 @@ public class ValidaLoginClinica {
 		int[] array1 = (int[]) pixelGrabber1.getPixels();
 		int[] array2 = (int[]) pixelGrabber2.getPixels();
 		
-		if (Arrays.equals(array1, array2) || !Arrays.equals(array1, array2)) {
-			System.out.println("São iguais ?" + (Arrays.equals(array1, array2)));
+		if (Arrays.equals(array1, array2)) {
+			result = true;
 		}
 
-
+		return result;
 
 
 	}
