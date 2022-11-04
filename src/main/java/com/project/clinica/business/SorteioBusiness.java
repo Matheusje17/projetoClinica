@@ -6,18 +6,28 @@ import java.util.List;
 import java.util.Random;
 
 import com.project.clinica.domain.AuthImage;
+import com.project.clinica.domain.AuthProfileClass;
+import com.project.clinica.domain.dtos.AuthProfileClassDTO;
 import com.project.clinica.domain.dtos.ImageDTO;
 
 public class SorteioBusiness {
 	
-	public ImageDTO realizaSorteio(List<AuthImage> imageToSort) throws IOException {
+	public List<AuthProfileClassDTO> realizaSorteio(List<AuthProfileClass> profiles,List<AuthImage> imageToSort) throws IOException {
+		List<AuthProfileClassDTO> profilesToUpdate = new ArrayList<>();
 		
-		Random sorteio = new Random();
-		int sorteado = sorteio.nextInt(imageToSort.size());		
-		ImageDTO sorteada = new ImageDTO(imageToSort.get(sorteado));
-		sorteada.setIsSorteada(true);
+		for (AuthProfileClass profile : profiles) {
+			Random sorteio = new Random();
+			int sorteado = sorteio.nextInt(imageToSort.size());
+			
+			profile.setSortedImageCod(imageToSort.get(sorteado).getCodigo().toString());
+			profilesToUpdate.add(new AuthProfileClassDTO(profile));
+		}
 		
-		return sorteada;		
+	
+		//ImageDTO sorteada = new ImageDTO(imageToSort.get(sorteado));
+		//sorteada.setIsSorteada(true);
+		
+		return profilesToUpdate;		
 	}
 	
 	public List<ImageDTO> inativarSorteio(List<AuthImage> imageToSort) {

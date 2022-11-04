@@ -1,6 +1,7 @@
 package com.project.clinica.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class AuthProfileService {
 	
 	}
 	
+	public List<AuthProfileClass> getAllAuthProfileClass() {
+		return profileRepository.findAll();
+	}
+	
 	public AuthProfileClass update(Integer id, AuthProfileClassDTO objDTO) {
 		objDTO.setId(id);
 		AuthProfileClass oldAuthProfile = profileRepository.findById(id).orElse(null);
@@ -33,13 +38,17 @@ public class AuthProfileService {
 		return profileRepository.save(oldAuthProfile);
 	}
 	
-	public AuthProfileClass sortImage(String profileDevoloperName, List<AuthImage> listToSort) throws IOException {
+	public List<AuthProfileClass> sortImage(List<AuthProfileClass> profiles , List<AuthImage> listToSort) throws IOException {
 		SorteioBusiness sorteio = new SorteioBusiness();
-		AuthProfileClass auth = profileRepository.findByProfileDeveloperName(profileDevoloperName).orElse(null);
-		AuthImage imgSorteada = new AuthImage(sorteio.realizaSorteio(listToSort));
+		//AuthProfileClass auth = profileRepository.findByProfileDeveloperName(profileDevoloperName).orElse(null);
 		
-		auth.setSortedImageCod(imgSorteada.getCodigo().toString());
-		return profileRepository.save(auth);
+		List<AuthProfileClass> profilesToUpdate = new ArrayList<>();
+		
+		for ( AuthProfileClassDTO profileDTO: sorteio.realizaSorteio(profiles, listToSort)) {
+			profilesToUpdate.add(new AuthProfileClass(profileDTO));
+		}
+		
+		return profileRepository.saveAll(profilesToUpdate);
 	}
 	
 }

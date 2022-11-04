@@ -1,6 +1,5 @@
 package com.project.clinica.resources;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -35,22 +34,17 @@ public class AuthImageResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@GetMapping()
-	public ResponseEntity<ImageDTO> sorteiaImagem() {
-		List<AuthImage> imagensToSort = authImgService.getAllAuthImages();
-		//System.out.println("dsadas" + imagensToSort);
-		
-		try {
-			SorteioBusiness sorteioBussiness = new SorteioBusiness();
-			ImageDTO sorteada = sorteioBussiness.realizaSorteio(imagensToSort);
-			authImgService.update(sorteada);
-			return ResponseEntity.ok().body(sorteada);
-		}
-		catch(IOException e) {
-			System.out.println("Erro:" + e.getMessage());
-		}
-		return null;	
-	}
+	/*
+	 * @GetMapping() public ResponseEntity<ImageDTO> sorteiaImagem() {
+	 * List<AuthImage> imagensToSort = authImgService.getAllAuthImages();
+	 * //System.out.println("dsadas" + imagensToSort);
+	 * 
+	 * try { SorteioBusiness sorteioBussiness = new SorteioBusiness(); ImageDTO
+	 * sorteada = sorteioBussiness.realizaSorteio(imagensToSort);
+	 * authImgService.update(sorteada); return ResponseEntity.ok().body(sorteada); }
+	 * catch(IOException e) { System.out.println("Erro:" + e.getMessage()); } return
+	 * null; }
+	 */
 	
 
 	@GetMapping(value = "inativar")

@@ -6,7 +6,6 @@ import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,12 +44,14 @@ public class AuthProfileResource {
 
 	}
 	
-	@GetMapping(value = "/{profileDeveloperName}")
-	public ResponseEntity<CustomResponse> sortImage(@PathVariable String profileDeveloperName) {
+	@GetMapping
+	public ResponseEntity<CustomResponse> sortImage() {
 		try {
-			AuthProfileClass result = authProfileService.sortImage(profileDeveloperName,authImageService.getAllAuthImages());	
-			CustomResponse response = new CustomResponse(result);
-			return ResponseEntity.ok().body(response);
+			//AuthProfileClass result; 
+			authProfileService.sortImage(authProfileService.getAllAuthProfileClass() ,authImageService.getAllAuthImages());	
+			
+			//CustomResponse response = new CustomResponse(null);
+			return ResponseEntity.ok().body(null);
 		}
 		catch (IOException e) {
 			System.out.println("ERRO" + e.getMessage());

@@ -30,6 +30,9 @@ public class AuthProfileClass implements Serializable {
 	}
 	
 	public AuthProfileClass(AuthProfileClassDTO objDTO) {
+		if (objDTO.getId() != null) {
+			this.id = objDTO.getId();
+		}
 		this.profileDeveloperName = objDTO.profileDeveloperName;
 		this.sortedImage = objDTO.sortedImage;
 	}
