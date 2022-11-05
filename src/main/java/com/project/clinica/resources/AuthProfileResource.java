@@ -2,6 +2,8 @@ package com.project.clinica.resources;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,14 @@ public class AuthProfileResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<CustomResponse> sortImage() {
+	public ResponseEntity<List<CustomResponse>> sortImage() {
 		try {
 			//AuthProfileClass result; 
-			authProfileService.sortImage(authProfileService.getAllAuthProfileClass() ,authImageService.getAllAuthImages());	
+			List<AuthProfileClass> authProfileList = authProfileService.sortImage(authProfileService.getAllAuthProfileClass() ,authImageService.getAllAuthImages());	
 			
 			//CustomResponse response = new CustomResponse(null);
-			return ResponseEntity.ok().body(null);
+			List<CustomResponse> results = authProfileList.stream().map(authProfile -> new CustomResponse(authProfile)).collect(Collectors.toList());
+			return ResponseEntity.ok().body(results);
 		}
 		catch (IOException e) {
 			System.out.println("ERRO" + e.getMessage());
